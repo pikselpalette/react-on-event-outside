@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'test') {
 
 module.exports = {
   mode,
-  entry: ['./index.js'],
+  entry: ['./lib/on-event-outside.js'],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js',
