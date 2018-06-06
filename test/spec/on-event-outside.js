@@ -1,18 +1,29 @@
 /* globals jest */
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Enzyme, { mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import 'jest-enzyme';
+import { render, findDOMNode, unmountComponentAtNode } from 'react-dom';
 
 import OnEventOutside from '../../lib/on-event-outside.js';
 
-Enzyme.configure({ adapter: new Adapter() });
-
 describe('OnEventOutside', () => {
-  let component;
-  let instance;
+  let root;
   let onClick;
+  let addEventListener;
+  let removeEventListener;
+  let testWrapper;
+
+  class TestWrapper extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = { render: true };
+      testWrapper = this;
+    }
+
+    render() {
+      if (!this.state.render) return null;
+
+      return this.props.children;
+    }
+  }
 
   const click = (node) => {
     const event = document.createEvent('HTMLEvents');
@@ -22,37 +33,46 @@ describe('OnEventOutside', () => {
     return event;
   };
 
-  beforeEach(() => {
-    jest.spyOn(document, 'addEventListener');
-    jest.spyOn(document, 'removeEventListener');
+  beforeEach((done) => {
+    root = document.createElement('div');
+    document.body.appendChild(root);
+
+    addEventListener = jest.spyOn(document, 'addEventListener');
+    removeEventListener = jest.spyOn(document, 'removeEventListener');
 
     onClick = jest.fn();
 
-    component = mount((
-      <OnEventOutside on={{ click: onClick }}>
-        <p>Hello Laura</p>
-      </OnEventOutside>
-    ));
-
-    instance = component.instance();
+    render((
+      <div>
+        <TestWrapper>
+          <OnEventOutside on={{ click: onClick }}>
+            <p>Hello Laura</p>
+          </OnEventOutside>
+        </TestWrapper>
+        <span />
+      </div>
+    ), root, done);
   });
 
-  afterEach(() => {
-    component.unmount();
-    document.addEventListener.mockRestore();
-    document.removeEventListener.mockRestore();
+  afterEach((done) => {
+    jest.restoreAllMocks();
+
+    testWrapper.setState({ render: false }, () => {
+      root.remove();
+      done();
+    });
   });
 
   it('renders children', () => {
-    expect(component.find('p')).toHaveText('Hello Laura');
+    expect(document.querySelector('p').textContent).toEqual('Hello Laura');
   });
 
   it('calls addEventListener once', () => {
-    expect(document.addEventListener).toHaveBeenCalledTimes(1);
+    expect(addEventListener).toHaveBeenCalledTimes(1);
   });
 
   it('does not call removeEventListener', () => {
-    expect(document.removeEventListener).not.toHaveBeenCalled();
+    expect(removeEventListener).not.toHaveBeenCalled();
   });
 
   it('calls it on click callback when body clicked', () => {
@@ -62,53 +82,69 @@ describe('OnEventOutside', () => {
   });
 
   it('does not call on click when element clicked', () => {
-    click(ReactDOM.findDOMNode(instance)); // eslint-disable-line react/no-find-dom-node
+    click(document.querySelector('p'));
 
     expect(onClick).not.toHaveBeenCalled();
   });
 
   describe('when component unmounts', () => {
-    beforeEach(() => {
-      component.unmount();
+    beforeEach((done) => {
+      testWrapper.setState({ render: false }, done);
     });
 
     it('calls removeEventListener', () => {
-      expect(document.removeEventListener).toHaveBeenCalledTimes(1);
+      expect(removeEventListener).toHaveBeenCalledTimes(1);
     });
   });
 
   describe('with 2 components', () => {
-    let secondComponent;
     let secondOnClick;
+    let secondTestWrapper;
+
+    class SecondTestWrapper extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = { render: true };
+        secondTestWrapper = this;
+      }
+
+      render() {
+        if (!this.state.render) return null;
+
+        return this.props.children;
+      }
+    }
 
     beforeEach(() => {
       secondOnClick = jest.fn();
 
-      secondComponent = mount((
-        <OnEventOutside on={{ click: secondOnClick }}>
-          Hello Joe
-        </OnEventOutside>
-      ));
+      render((
+        <SecondTestWrapper>
+          <OnEventOutside on={{ click: secondOnClick }}>
+            Hello Joe
+          </OnEventOutside>
+        </SecondTestWrapper>
+      ), root.querySelector('span'));
     });
 
-    afterEach(() => {
-      secondComponent.unmount();
+    afterEach((done) => {
+      secondTestWrapper.setState({ render: false }, done);
     });
 
     it('calls addEventListener once', () => {
-      expect(document.addEventListener).toHaveBeenCalledTimes(1);
+      expect(addEventListener).toHaveBeenCalledTimes(1);
     });
 
     it('calls both component callbacks when body clicked', () => {
       const event = click(document.body);
 
-      expect(onClick).toHaveBeenCalledWith(event);
       expect(secondOnClick).toHaveBeenCalledWith(event);
+      expect(onClick).toHaveBeenCalledWith(event);
     });
 
     describe('when one component unmounts', () => {
-      beforeEach(() => {
-        component.unmount();
+      beforeEach((done) => {
+        testWrapper.setState({ render: false }, done);
       });
 
       it('does not call removeEventListener', () => {
@@ -116,12 +152,12 @@ describe('OnEventOutside', () => {
       });
 
       describe('when second component unmounts', () => {
-        beforeEach(() => {
-          secondComponent.unmount();
+        beforeEach((done) => {
+          secondTestWrapper.setState({ render: false }, done);
         });
 
         it('calls removeEventListener', () => {
-          expect(document.removeEventListener).toHaveBeenCalledTimes(1);
+          expect(removeEventListener).toHaveBeenCalledTimes(1);
         });
       });
     });
