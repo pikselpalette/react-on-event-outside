@@ -1,0 +1,9 @@
+{
+  "presets": ["env", "react", "flow"],
+  "plugins": ["transform-flow-comments"],
+  "env": {
+    "test": {
+      "plugins": ["istanbul"]
+    }
+  }
+}
