@@ -3,7 +3,7 @@
   "description": "Utility component for handling events outside the current component",
   "version": "0.1.0",
   "author": "Sam Boylett <sam.boylett@piksel.com>",
-  "main": "dist/index.js",
+  "browser": "dist/index.js",
   "scripts": {
     "prepublishOnly": "NODE_ENV=production webpack --bail --progress --profile --optimize-minimize",
     "build": "webpack --bail --progress --profile",
