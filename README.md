@@ -7,7 +7,7 @@ This package lets you listen to events outside of a component
 ## Installation
 
 ```sh
-npm i --save git+ssh://git@gitlab.piksel.com:sam.boylett/react-on-event-outside.git
+npm i --save react-on-event-outside
 ```
 
 ## Usage
