@@ -25,7 +25,15 @@
       "^.+\\.js$": "babel-jest"
     },
     "coverageDirectory": "./coverage/",
-    "collectCoverage": true
+    "collectCoverage": true,
+    "coverageThreshold": {
+      "global": {
+        "statements": 100,
+        "branches": 100,
+        "lines": 100,
+        "functions": 100
+      }
+    }
   },
   "repository": {
     "type": "git"
