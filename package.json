@@ -36,7 +36,8 @@
     }
   },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/pikselpalette/react-on-event-outside"
   },
   "license": "Apache-2.0",
   "peerDependencies": {
