@@ -1,5 +1,6 @@
 {
-  "extends": "airbnb-base",
+  "parser": "babel-eslint",
+  "extends": ["airbnb-base", "plugin:flowtype/recommended"],
   "globals": {
     "fetch": true
   },
@@ -18,6 +19,7 @@
     "import/extensions": 0
   },
   "plugins": [
-    "jest"
+    "jest",
+    "flowtype"
   ]
 }

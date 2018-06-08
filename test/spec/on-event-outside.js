@@ -1,6 +1,6 @@
 /* globals jest */
 import React from 'react';
-import { render, findDOMNode, unmountComponentAtNode } from 'react-dom';
+import { render } from 'react-dom';
 
 import OnEventOutside from '../../lib/on-event-outside.js';
 
