@@ -6,3 +6,4 @@ doc
 test
 karma.conf.js
 webpack.config.js
+coverage

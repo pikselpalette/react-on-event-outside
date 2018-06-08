@@ -1,7 +1,7 @@
 {
   "name": "react-on-event-outside",
   "description": "Utility component for handling events outside the current component",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Sam Boylett <sam.boylett@piksel.com>",
   "main": "dist/index.js",
   "scripts": {
