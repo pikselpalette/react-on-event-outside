@@ -42,16 +42,20 @@ describe('OnEventOutside', () => {
 
     onClick = jest.fn();
 
-    render((
-      <div>
-        <TestWrapper>
-          <OnEventOutside on={{ click: onClick }}>
-            <p>Hello Laura</p>
-          </OnEventOutside>
-        </TestWrapper>
-        <span />
-      </div>
-    ), root, done);
+    render(
+      (
+        <div>
+          <TestWrapper>
+            <OnEventOutside on={{ click: onClick }}>
+              <p>Hello Laura</p>
+            </OnEventOutside>
+          </TestWrapper>
+          <span />
+        </div>
+      ),
+      root,
+      done
+    );
   });
 
   afterEach((done) => {
@@ -118,13 +122,16 @@ describe('OnEventOutside', () => {
     beforeEach(() => {
       secondOnClick = jest.fn();
 
-      render((
-        <SecondTestWrapper>
-          <OnEventOutside on={{ click: secondOnClick }}>
-            Hello Joe
-          </OnEventOutside>
-        </SecondTestWrapper>
-      ), root.querySelector('span'));
+      render(
+        (
+          <SecondTestWrapper>
+            <OnEventOutside on={{ click: secondOnClick }}>
+              Hello Joe
+            </OnEventOutside>
+          </SecondTestWrapper>
+        ),
+        root.querySelector('span')
+      );
     });
 
     afterEach((done) => {

@@ -1,6 +1,10 @@
 {
   "parser": "babel-eslint",
-  "extends": ["airbnb-base", "plugin:flowtype/recommended"],
+  "extends": [
+    "airbnb-base",
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended"
+  ],
   "globals": {
     "fetch": true
   },
@@ -16,10 +20,12 @@
     "no-plusplus": 0,
     "no-prototype-builtins": 0,
     "no-param-reassign": ["error", { "props": false }],
-    "import/extensions": 0
+    "import/extensions": 0,
+    "react/prop-types": 0
   },
   "plugins": [
     "jest",
-    "flowtype"
+    "flowtype",
+    "react"
   ]
 }
