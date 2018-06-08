@@ -12,6 +12,8 @@ npm i --save git+ssh://git@gitlab.piksel.com:sam.boylett/react-on-event-outside.
 
 ## Usage
 
+`OnEventOutside` takes an `on` prop which is an object where the keys are the event type (e.g. `click`, `mousedown`, `keyup`, etc.) and the values are your callbacks.
+
 ```jsx
 import OnEventOutside from 'react-on-event-outside';
 
