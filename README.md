@@ -3,6 +3,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![npm version](https://badge.fury.io/js/react-on-event-outside.svg)](https://badge.fury.io/js/react-on-event-outside)
 [![Build Status](https://travis-ci.org/pikselpalette/react-on-event-outside.svg?branch=master)](https://travis-ci.org/pikselpalette/react-on-event-outside)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/a86d2c282e4143899aa83bf696d8c523)](https://www.codacy.com/app/samboylett/react-on-event-outside?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pikselpalette/react-on-event-outside&amp;utm_campaign=Badge_Grade)
 
 This package lets you listen to events outside of a component
 
