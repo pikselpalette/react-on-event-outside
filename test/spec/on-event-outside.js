@@ -85,6 +85,15 @@ describe('OnEventOutside', () => {
     expect(onClick).toHaveBeenCalledWith(event);
   });
 
+  it('does not call on click callback if target not instance of Node', () => {
+    const event = document.createEvent('HTMLEvents');
+    event.initEvent('click', true, true);
+    Object.defineProperty(event, 'target', { writable: false, value: {} });
+    document.body.dispatchEvent(event);
+
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
   it('does not call on click when element clicked', () => {
     click(document.querySelector('p'));
 
