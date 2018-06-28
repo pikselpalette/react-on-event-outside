@@ -6,6 +6,8 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/a86d2c282e4143899aa83bf696d8c523)](https://www.codacy.com/app/samboylett/react-on-event-outside?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pikselpalette/react-on-event-outside&amp;utm_campaign=Badge_Grade)
 [![devDependencies Status](https://david-dm.org/pikselpalette/react-on-event-outside/dev-status.svg)](https://david-dm.org/pikselpalette/react-on-event-outside?type=dev)
 [![peerDependencies Status](https://david-dm.org/pikselpalette/react-on-event-outside/peer-status.svg)](https://david-dm.org/pikselpalette/react-on-event-outside?type=peer)
+[![codecov](https://codecov.io/gh/pikselpalette/react-on-event-outside/branch/master/graph/badge.svg)](https://codecov.io/gh/pikselpalette/react-on-event-outside)
+[![Mutation testing badge](https://badge.stryker-mutator.io/github.com/pikselpalette/react-on-event-outside/master)](https://stryker-mutator.github.io)
 
 This package lets you listen to events outside of a component
 
