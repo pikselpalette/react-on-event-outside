@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, Component } from 'react';
 import EventOutside from 'react-on-event-outside';
 
-class App extends React.Component {
+class Example extends Component {
   constructor(props) {
     super(props);
 
@@ -20,12 +20,12 @@ class App extends React.Component {
     return (
       <Fragment>
         <div ref={this.ref} style={{background: '#00ddff', padding: '10px'}}>
-          <EventOutside parentRef={this.ref} on={{
+          <EventOutside interactableComponentRef={this.ref} on={{
             click: this.handleClick
           }}>
             Click anything other than me to increase the counter below
           </EventOutside>
-      </div>
+        </div>
 
         <p style={{padding: '0 10px'}}>Clicked: {this.state.clickCount}</p>
       </Fragment>
@@ -33,4 +33,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default Example;
