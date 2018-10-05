@@ -1,77 +1,61 @@
 /* globals jest */
 import React from 'react';
 import { render } from 'react-dom';
-
+import { mount, configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 import OnEventOutside from '../../lib/on-event-outside.js';
+import 'jest-enzyme';
+
+configure({ adapter: new Adapter() });
 
 describe('OnEventOutside', () => {
-  let root;
-  let onClick;
-  let addEventListener;
-  let removeEventListener;
   let testWrapper;
+  let Component;
 
   class TestWrapper extends React.Component {
     constructor(props) {
       super(props);
       this.state = { render: true };
+      this.ref = React.createRef();
       testWrapper = this;
+    }
+
+    handleClick() {
+      console.log('clicked');
     }
 
     render() {
       if (!this.state.render) return null;
 
-      return this.props.children;
+      return (
+        <div ref={this.ref}>
+          <OnEventOutside interactableComponentRef={this.ref} on={{
+            click: this.handleClick
+          }}>
+            { this.props.children }
+          </OnEventOutside>
+        </div>
+      );
     }
   }
 
-  const click = (node) => {
-    const event = document.createEvent('HTMLEvents');
-    event.initEvent('click', true, true);
-    node.dispatchEvent(event);
-
-    return event;
-  };
-
-  beforeEach((done) => {
-    root = document.createElement('div');
-    document.body.appendChild(root);
-
-    addEventListener = jest.spyOn(document, 'addEventListener');
-    removeEventListener = jest.spyOn(document, 'removeEventListener');
-
-    onClick = jest.fn();
-
-    render(
-      (
-        <div>
-          <TestWrapper>
-            <OnEventOutside on={{ click: onClick }}>
-              <p>Hello Laura</p>
-            </OnEventOutside>
-          </TestWrapper>
-          <span />
-        </div>
-      ),
-      root,
-      done
+  beforeEach(() => {
+    Component = mount(
+      <TestWrapper>
+        <p>Click me and I live. Click elsewhere and I die</p>
+      </TestWrapper>
     );
   });
 
-  afterEach((done) => {
-    jest.restoreAllMocks();
-
-    testWrapper.setState({ render: false }, () => {
-      root.remove();
-      done();
-    });
+  fit('renders without crashing', () => {
+    expect(Component).toBeDefined();
   });
 
-  it('renders children', () => {
-    expect(document.querySelector('p').textContent).toEqual('Hello Laura');
+  fit('renders children', () => {
+    expect(Component.find('p')).toExist();
   });
 
-  it('calls addEventListener once', () => {
+  fit('calls addEventListener once', () => {
     expect(addEventListener).toHaveBeenCalledTimes(1);
   });
 
@@ -80,9 +64,7 @@ describe('OnEventOutside', () => {
   });
 
   it('calls it on click callback when body clicked', () => {
-    const event = click(document.body);
-
-    expect(onClick).toHaveBeenCalledWith(event);
+    console.log(testWrapper);
   });
 
   it('does not call on click callback if target not instance of Node', () => {
