@@ -2,8 +2,8 @@
 import React from 'react';
 import { mount, configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import OnEventOutside from '../../lib/on-event-outside.js';
 import 'jest-enzyme';
+import OnEventOutside from '../../lib/on-event-outside.js';
 
 configure({ adapter: new Adapter() });
 
@@ -37,11 +37,9 @@ describe('OnEventOutside', () => {
   }
 
   beforeEach(() => {
-    Component = mount(
-      <TestWrapper>
-        <p>Click me and I live. Click elsewhere and I die</p>
-      </TestWrapper>
-    );
+    Component = mount(<TestWrapper>
+      <p>Click me and I live. Click elsewhere and I die</p>
+    </TestWrapper>);
   });
 
   fit('renders without crashing', () => {
