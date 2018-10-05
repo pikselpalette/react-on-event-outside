@@ -1,8 +1,8 @@
 {
-  "name": "react-on-event-outside",
+  "name": "@pikselpalette/react-on-event-outside",
   "description": "Utility component for handling events outside the current component",
   "version": "1.0.0",
-  "author": "Sam Boylett <sam.boylett@piksel.com>",
+  "author": "Sam Boylett <sam.boylett@piksel.com>, Joseph Abell <joseph.abell@piksel.com>",
   "main": "dist/index.js",
   "scripts": {
     "prepublishOnly": "NODE_ENV=production npm run build -- --optimize-minimize",
