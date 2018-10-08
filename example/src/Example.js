@@ -1,33 +1,51 @@
 import React, { Fragment, Component } from 'react';
-import EventOutside from 'react-on-event-outside';
+import EventOutside from '@pikselpalette/react-on-event-outside';
+
+const Outside = ({ handleClick, itemName, backgroundColour, state }) => (
+  <EventOutside on={{
+    click: () => {
+      handleClick(itemName, false);
+    }
+  }}>
+    <div
+      onClick={() => {
+        handleClick(itemName, true);
+      }}
+      style={{
+        background: backgroundColour,
+        padding: '10px'
+      }}
+    >
+      <p>Click here to activate {itemName}</p>
+      <p>{itemName} active: {state ? 'true' : 'false'}</p>
+    </div>
+  </EventOutside>
+);
 
 class Example extends Component {
-  constructor(props) {
-    super(props);
-
-    this.ref = React.createRef();
-  }
-
   state = {
-    clickCount: 0
+    item1: false,
+    item2: false
   }
 
-  handleClick = () => {
-    this.setState(({ clickCount }) => ({ clickCount: clickCount + 1 }));
+  handleClick = (item, clickState) => {
+    console.log(item, clickState);
+    this.setState({ [item]: clickState });
   }
 
   render = () => {
     return (
       <Fragment>
-        <div ref={this.ref} style={{background: '#00ddff', padding: '10px'}}>
-          <EventOutside interactableComponentRef={this.ref} on={{
-            click: this.handleClick
-          }}>
-            Click anything other than me to increase the counter below
-          </EventOutside>
-        </div>
+        <p>
+          This example shows that we can have more than one EventOutside components on a page without them clashing with one another.
+        </p>
+        <p>
+          Click anywhere in the coloured boxes to activate that box. click outside the boxes to deactivate them.
+          Notice that clicking on one box does not deactivate the other.
+        </p>
 
-        <p style={{padding: '0 10px'}}>Clicked: {this.state.clickCount}</p>
+        <Outside handleClick={this.handleClick} itemName='item1' backgroundColour='#00ddff' state={this.state.item1} />
+        <Outside handleClick={this.handleClick} itemName='item2' backgroundColour='#ddff00' state={this.state.item2} />
       </Fragment>
     );
   }

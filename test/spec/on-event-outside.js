@@ -25,13 +25,11 @@ describe('OnEventOutside', () => {
       if (!this.state.render) return null;
 
       return (
-        <div ref={this.ref}>
-          <OnEventOutside interactableComponentRef={this.ref} on={{
-            click: this.handleClick
-          }}>
-            { this.props.children }
-          </OnEventOutside>
-        </div>
+        <OnEventOutside on={{
+          click: this.handleClick
+        }}>
+          { this.props.children }
+        </OnEventOutside>
       );
     }
   }
