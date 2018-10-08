@@ -32,6 +32,9 @@ class Example extends Component {
               background: 'red',
               padding: '10px'
             }}
+            onClick={() => {
+              this.handleClick('item1', true);
+            }}
           >
             <p>Click here to activate 1</p>
             <p>1 active: {this.state.item1 ? 'true' : 'false'}</p>
@@ -48,6 +51,9 @@ class Example extends Component {
             style={{
               background: 'green',
               padding: '10px'
+            }}
+            onClick={() => {
+              this.handleClick('item2', true);
             }}
           >
             <p>Click here to activate 2</p>

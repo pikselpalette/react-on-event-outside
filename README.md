@@ -23,91 +23,37 @@ npm i --save react-on-event-outside
 
 `OnEventOutside` allows react components to interact with other components events.
 
-It takes the following props:
-*  interactableComponentRef - A ref to a component that lives outside the react-on-event-outside. This is the component that will provide events to react-on-event-outside.
+Properties:
 *  on - An object where the keys are the event type (e.g. `click`, `mousedown`, `keyup`, etc.) and the values are your callbacks.
 
 ## Example
 
-TLDR: checkout the working example in the example folder.
-
-We need a component that will provide the events to react-on-event-outside.
-Unfortunately this needs to be a class rather than a functional component, as we
-can only get refs from classes.
-
-There are two steps in the following example:
-*  We need to create a ref in our constructor
-*  Attach the ref to the component using the ref attribute
-
-```jsx
-import React, { Component } from 'react';
-
-class Example extends Component {
-  constructor(props) {
-    super(props);
-
-    this.ref = React.createRef();
-  }
-
-  render = () => (
-    <div ref={this.ref}>
-  );
-}
-
-export default Example;
-```
-
-Now we have a ref ready to use, we need to add react-on-event-outside, and pass the ref to it.
+For a more detailed example, check the example folder.
 
 ```jsx
 import React, { Component } from 'react';
 import EventOutside from 'react-on-event-outside';
 
 class Example extends Component {
-  constructor(props) {
-    super(props);
-
-    this.ref = React.createRef();
-  }
-
-  render = () => {
-    return (
-      <div ref={this.ref}>
-        <EventOutside interactableComponentRef={this.ref} />
-      </div>
-    );
-  }
-}
-
-export default Example;
-```
-
-And finally, we need to tell react-on-event-outside which events we should listen to.
-
-```jsx
-import React, { Component } from 'react';
-import EventOutside from 'react-on-event-outside';
-
-class Example extends Component {
-  constructor(props) {
-    super(props);
-
-    this.ref = React.createRef();
-  }
-
-  handleClick = () => {
+  handleClickOutside = () => {
     console.log('clicked!');
   }
 
   render = () => {
     return (
-      <div ref={this.ref}>
-        <EventOutside interactableComponentRef={this.ref} on={{
-          click: this.handleClick
-        }}>
-          Click anything other than me to increase the counter below
-        </EventOutside>
-      </div>
+      <EventOutside on={{
+        click: () => {
+          console.log('clicked outside the component');
+        }
+      }}>
+        <div
+          onClick={() => {
+            console.log('clicked inside the component');
+          }}
+        >
+          Click anything other than here to recieve a nice console log
+        </div>
+      </EventOutside>
     );
   }
 }
