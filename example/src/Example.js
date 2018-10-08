@@ -1,27 +1,6 @@
 import React, { Fragment, Component } from 'react';
 import EventOutside from '@pikselpalette/react-on-event-outside';
 
-const Outside = ({ handleClick, itemName, backgroundColour, state }) => (
-  <EventOutside on={{
-    click: () => {
-      handleClick(itemName, false);
-    }
-  }}>
-    <div
-      onClick={() => {
-        handleClick(itemName, true);
-      }}
-      style={{
-        background: backgroundColour,
-        padding: '10px'
-      }}
-    >
-      <p>Click here to activate {itemName}</p>
-      <p>{itemName} active: {state ? 'true' : 'false'}</p>
-    </div>
-  </EventOutside>
-);
-
 class Example extends Component {
   state = {
     item1: false,
@@ -29,7 +8,6 @@ class Example extends Component {
   }
 
   handleClick = (item, clickState) => {
-    console.log(item, clickState);
     this.setState({ [item]: clickState });
   }
 
@@ -44,8 +22,38 @@ class Example extends Component {
           Notice that clicking on one box does not deactivate the other.
         </p>
 
-        <Outside handleClick={this.handleClick} itemName='item1' backgroundColour='#00ddff' state={this.state.item1} />
-        <Outside handleClick={this.handleClick} itemName='item2' backgroundColour='#ddff00' state={this.state.item2} />
+        <EventOutside on={{
+          click: () => {
+            this.handleClick('item1', false);
+          }
+        }}>
+          <div
+            style={{
+              background: 'red',
+              padding: '10px'
+            }}
+          >
+            <p>Click here to activate 1</p>
+            <p>1 active: {this.state.item1 ? 'true' : 'false'}</p>
+          </div>
+        </EventOutside>
+
+
+        <EventOutside on={{
+          click: () => {
+            this.handleClick('item2', false);
+          }
+        }}>
+          <div
+            style={{
+              background: 'green',
+              padding: '10px'
+            }}
+          >
+            <p>Click here to activate 2</p>
+            <p>2 active: {this.state.item2 ? 'true' : 'false'}</p>
+          </div>
+        </EventOutside>
       </Fragment>
     );
   }
