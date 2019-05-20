@@ -1,6 +1,6 @@
 {
-  "presets": ["env", "react", "flow"],
-  "plugins": ["transform-flow-comments"],
+  "presets": ["@babel/preset-env", "@babel/preset-react", "@babel/preset-flow"],
+  "plugins": ["@babel/transform-flow-comments"],
   "env": {
     "test": {
       "plugins": ["istanbul"]

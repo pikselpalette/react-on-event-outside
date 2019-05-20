@@ -1,13 +1,12 @@
-/* globals jest */
-import React from 'react';
-import { mount, configure } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import 'jest-enzyme';
-import OnEventOutside from '../../lib/on-event-outside.js';
+import React from "react";
+import { mount, configure } from "enzyme";
+import Adapter from "enzyme-adapter-react-16";
+import "jest-enzyme";
+import OnEventOutside from "../../lib/on-event-outside.js";
 
 configure({ adapter: new Adapter() });
 
-describe('OnEventOutside', () => {
+describe("OnEventOutside", () => {
   let Component;
 
   class TestWrapper extends React.Component {
@@ -42,11 +41,11 @@ describe('OnEventOutside', () => {
     );
   });
 
-  fit('renders without crashing', () => {
+  it("renders without crashing", () => {
     expect(Component).toBeDefined();
   });
 
-  fit('renders children', () => {
-    expect(Component.find('p')).toExist();
+  it("renders children", () => {
+    expect(Component.find("p")).toExist();
   });
 });
