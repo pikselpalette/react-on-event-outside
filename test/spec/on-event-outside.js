@@ -17,27 +17,29 @@ describe('OnEventOutside', () => {
       this.ref = React.createRef();
     }
 
-    static handleClick() {
-      console.log('clicked');
-    }
+    static handleClick() {}
 
     render() {
       if (!this.state.render) return null;
 
       return (
-        <OnEventOutside on={{
-          click: this.handleClick
-        }}>
-          { this.props.children }
+        <OnEventOutside
+          on={{
+            click: this.handleClick
+          }}
+        >
+          {this.props.children}
         </OnEventOutside>
       );
     }
   }
 
   beforeEach(() => {
-    Component = mount(<TestWrapper>
-      <p>Click me and I live. Click elsewhere and I die</p>
-    </TestWrapper>);
+    Component = mount(
+      <TestWrapper>
+        <p>Click me and I live. Click elsewhere and I die</p>
+      </TestWrapper>
+    );
   });
 
   fit('renders without crashing', () => {
